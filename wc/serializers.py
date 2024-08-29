@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from .models import Product
+from wc.models import Design
 
-class ProductSerializer(serializers.ModelSerializer) :
-    price = serializers.IntegerField()
+class DesignSerializer(serializers.ModelSerializer) :
+    userId = serializers.IntegerField()
+    list = serializers.CharField()
 
     class Meta:
-        model = Product
-        fields = ['price']
+        model = Design
+        fields = ['list', 'userId']

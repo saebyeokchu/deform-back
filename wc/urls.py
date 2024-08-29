@@ -32,5 +32,7 @@ urlpatterns = [
     # payment
     path('get-all-payments/',views.get_all_payments, name='get_all_payments'),
     # product
-    path('create-product/',views.create_product, name='create_product')
+    path('create-product/',views.create_product, name='create_product'),
+    # database
+    path('get_design_list/',views.design_list, name='design_list')
 ]

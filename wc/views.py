@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Design
+from .serializers import DesignSerializer
 from .service.post import Post
 from .service.media import Media
 from .service.order import Order
@@ -47,10 +47,19 @@ def get_post(request) :
 @api_view(['POST'])
 def add_media(request) :
     try :
-        if(request.data.get('imgUrl')) :
+        if(request.data.get('file')) :
             responseText = Media.upload(request.data)
             if responseText['id'] :
                 return Response(responseText['id'], status=status.HTTP_201_CREATED)
+    except :
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def get_media(request) :
+    try :
+        if(request.GET.get('userId')) :
+            responseText = Media.getByAuthor(request.GET.get('userId'))
+            return Response(responseText['id'], status=status.HTTP_201_CREATED)
     except :
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -90,17 +99,16 @@ def create_product(request) :
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# @api_view(['GET','POST'])
-# def book_list(request) :
-#     if request.method == 'GET' :
-#         books = Book.objects.all()
-#         serializer = BookSerializer(books, many=True)
-#         return Response(serializer.data)
-#     elif request.method == 'POST' :
-#         serializer = BookSerializer(data=request.data)
-#         if serializer.is_valid() :
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+@api_view(['GET'])
+def design_list(request) :
+    design = Design.objects.get(userId=request.GET.get("userId"))
+    serializer = DesignSerializer(design)
+    return Response(serializer.data)
+    # elif request.method == 'POST' :
+    #     serializer = BookSerializer(data=request.data)
+    #     if serializer.is_valid() :
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # @api_view(['GET','PUT','DELETE'])
 # def book_detail(request, pk):
