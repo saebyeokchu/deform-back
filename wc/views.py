@@ -55,11 +55,11 @@ def add_media(request) :
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-def get_media(request) :
+def get_media_by_author(request) :
     try :
         if(request.GET.get('userId')) :
             responseText = Media.getByAuthor(request.GET.get('userId'))
-            return Response(responseText['id'], status=status.HTTP_201_CREATED)
+            return Response(responseText, status=status.HTTP_201_CREATED)
     except :
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

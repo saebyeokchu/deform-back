@@ -25,6 +25,7 @@ urlpatterns = [
     path('get-post/',views.get_post, name='get_post'),
     # media
     path('add-media/',views.add_media, name='add_media'),
+    path('get-media-by-author/',views.get_media_by_author, name='get_media_by_author'),
     #order
     path('make-order/',views.make_order, name='make_order'),
     #user
@@ -34,5 +35,5 @@ urlpatterns = [
     # product
     path('create-product/',views.create_product, name='create_product'),
     # database
-    path('get_design_list/',views.design_list, name='design_list')
+    path('get-design-list/',views.design_list, name='design_list')
 ]

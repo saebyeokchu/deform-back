@@ -38,4 +38,5 @@ class Media :
         response = requests.get(api_url)
         response_json = response.json()
         print(response_json)
+        return response_json
 
