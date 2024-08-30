@@ -6,7 +6,7 @@ def header(user, password):
     header_json = {'Authorization': 'Basic ' + token.decode('utf-8')}
     return header_json
 
-def upload_image_to_wordpress(file, url, header_json, userId):
+def upload_image_to_wordpress(file, url, header_json, author):
     print("[media]")
     #  'file': open(file_path,"rb"),
     #    'file' : mediaData['imgUrl'],
@@ -17,7 +17,7 @@ def upload_image_to_wordpress(file, url, header_json, userId):
     }
 
     data = {
-        'author': userId,  # Set the author ID
+        'author': author,  # Set the author ID
     }
     #'author' : mediaData['author']
     responce = requests.post(url + "wp-json/wp/v2/media", headers = header_json, files = media, data = data)
@@ -30,10 +30,10 @@ class Media :
         #'C://Users//cuu02//OneDrive//바탕 화면//deform//img//PIKA.png'    
 
         # file_path = "C://Users//cuu02//Downloads//"+mediaData['imgUrl']+".jpeg"           
-        return upload_image_to_wordpress(mediaData["file"], 'https://dawn-test.xyz/',hed,mediaData["userId"])
+        return upload_image_to_wordpress(mediaData["file"], 'https://dawn-test.xyz/',hed,mediaData["author"])
     
-    def getByAuthor(userId):
-        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/media?author='+userId
+    def getByAuthor(author):
+        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/media?author='+author
         print(api_url)
         response = requests.get(api_url)
         response_json = response.json()

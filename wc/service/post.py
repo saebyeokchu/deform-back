@@ -21,12 +21,12 @@ class Post :
             'status': 'publish',
             'slug' : 'custom-work',
             # 'content': newPost['content'] ,
-            'content': "<img src=\""+newPost['contentImgUrl']+"\" /> <br /> <p>"+newPost['content']+"</p>",
+            'content': "<img src=\""+newPost['image_url']+"\" />",
             'featured_media' : newPost['featured_media'] 
         }
 
         response = requests.post('https://dawn-test.xyz/wp-json/wp/v2/posts', headers=header, json=data)
-        os.remove( newPost['deleteImgUrl'] )
+        # os.remove( newPost['deleteImgUrl'] )
         
         return json.loads(response.text)
 

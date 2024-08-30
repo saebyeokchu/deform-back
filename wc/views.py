@@ -29,7 +29,6 @@ def create_post(request) :
         try :
             responseText = Post.create(request.data)
             if responseText['link'] : 
-                print('link : ', responseText['link'])
                 return Response(responseText['link'],status=status.HTTP_201_CREATED)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -49,8 +48,7 @@ def add_media(request) :
     try :
         if(request.data.get('file')) :
             responseText = Media.upload(request.data)
-            if responseText['id'] :
-                return Response(responseText['id'], status=status.HTTP_201_CREATED)
+            return Response(responseText, status=status.HTTP_201_CREATED)
     except :
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -101,7 +99,7 @@ def create_product(request) :
 
 @api_view(['GET'])
 def design_list(request) :
-    design = Design.objects.get(userId=request.GET.get("userId"))
+    design = Design.objects.get(userid=request.GET.get("userId"))
     serializer = DesignSerializer(design)
     return Response(serializer.data)
     # elif request.method == 'POST' :
