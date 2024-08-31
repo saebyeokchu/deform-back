@@ -111,8 +111,8 @@ def add_block(request) :
 
 @api_view(['GET'])
 def get_block(request) :
-    item = blockboard.objects.get(userid = request.GET.get("userid"))
-    serializer = blockboardSerializer(item)
+    item = blockboard.objects.filter(userid = request.GET.get("userid"))
+    serializer = blockboardSerializer(item, many=True)
     return Response(serializer.data)
 
     # design = Design.objects.get(userid=request.GET.get("userId"))
