@@ -22,6 +22,7 @@ urlpatterns = [
     path('add-product/',views.add_product, name='add_product'),
     # post
     path('create-post/',views.create_post, name='create_post'),
+    path('update-post/',views.update_post, name='update_post'),
     path('get-post/',views.get_post, name='get_post'),
     # media
     path('add-media/',views.add_media, name='add_media'),
@@ -37,5 +38,7 @@ urlpatterns = [
     path('create-product/',views.create_product, name='create_product'),
     # database
     path('get-block/',views.get_block, name='get_block'),
-    path('add-block/',views.add_block, name='add_block')
+    path('add-block/',views.add_block, name='add_block'),
+    path('update-block/',views.update_block, name='update_block')
+
 ]

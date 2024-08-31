@@ -24,12 +24,20 @@ def add_product(request) :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
+def update_post(request) :
+    if request.method == 'POST' :
+        try :
+            responseText = Post.update(request.data)
+            return Response(responseText,status=status.HTTP_202_ACCEPTED)
+        except :
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+@api_view(['POST'])
 def create_post(request) :
     if request.method == 'POST' :
         try :
             responseText = Post.create(request.data)
-            if responseText['link'] : 
-                return Response(responseText['link'],status=status.HTTP_201_CREATED)
+            return Response(responseText,status=status.HTTP_201_CREATED)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -38,8 +46,8 @@ def get_post(request) :
     if request.method == 'GET' :
         #post = request.POST.get('post')
         try :
-            Post.read()
-            return Response(status=status.HTTP_201_CREATED)
+            responseText = Post.read(request.GET.get["postId"])
+            return Response(responseText, status=status.HTTP_201_CREATED)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
@@ -112,22 +120,39 @@ def create_product(request) :
 def add_block(request) :
     try :
         block = blockboard(
-            userid = request.data["userid"],
-            mediaid = request.data["mediaid"]
+            userid = request.data["userId"],
+            mediaid = request.data["mediaId"],
+            shared = True if request.data.get("shared") else False
         )
         block.save()
-        item = blockboard.objects.filter(userid = request.data["userid"])
-        serializer = blockboardSerializer(item, many=True)
+        item = blockboard.objects.filter(userid = request.data["userId"])
+        serializer = blockboardSerializer(block)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except :
         return Response(status = status.HTTP_409_CONFLICT)
 
+@api_view(['POST'])
+def update_block(request) :
+    try :
+        print(request.data.get("userId"))
 
+        item = blockboard.objects.get(userid = request.data.get("userId"), mediaid = request.data.get("mediaId"))
+        item.shared = True if request.data.get("shared") else False
+        item.save()
+
+        serializer = blockboardSerializer(item)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    except :
+        return Response(status = status.HTTP_406_NOT_ACCEPTABLE)
 
 @api_view(['GET'])
 def get_block(request) :
     try :
         item = blockboard.objects.filter(userid = request.GET.get("userId"))
+        
+        if request.GET.get("mediaId") :
+            item = blockboard.objects.filter(mediaid = request.GET.get("mediaId"))
+
         serializer = blockboardSerializer(item, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except item.DoesNotExist:

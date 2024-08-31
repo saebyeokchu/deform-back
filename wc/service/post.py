@@ -30,10 +30,49 @@ class Post :
         
         return json.loads(response.text)
 
-    def read():
-        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/posts'
+    def read(postId):
+        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/posts/' + postId
         print(api_url)
         response = requests.get(api_url)
         response_json = response.json()
-        print(response_json)
+        return response_json
+
+    def update(data):
+        post_id = data["postId"]
+        show_post = data["showPost"]
+
+        print(post_id)
+        print(show_post)
+
+        #crendtials
+        username = 'user'
+        password = 'MUBS 2xOA PboP dwK4 hpHQ DlK1'
+        credentials = username + ':' + password
+        cred_token = base64.b64encode(credentials.encode())
+
+        #code
+        header = {'Authorization': 'Basic ' + cred_token.decode('utf-8')}
+
+        # Endpoint for the specific post
+        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/posts'
+        url = f"{api_url}/{post_id}"
+        
+        # Data payload to update the category
+
+        category_id = 1 if show_post else 30
+        data = {
+            'categories': [category_id]  # 1 for show, 2 for hide
+        }
+
+        print(category_id, data)
+        
+        # Making the PUT request to update the post
+        response = requests.put(
+            url,
+            json=data,
+            headers=header
+        )
+        
+        return response.json()
+
 
