@@ -6,7 +6,7 @@ def header(user, password):
     header_json = {'Authorization': 'Basic ' + token.decode('utf-8')}
     return header_json
 
-def upload_image_to_wordpress(file, url, header_json, author):
+def upload_image_to_wordpress(file, url, header_json, author, title):
     print("[media]")
     #  'file': open(file_path,"rb"),
     #    'file' : mediaData['imgUrl'],
@@ -17,6 +17,7 @@ def upload_image_to_wordpress(file, url, header_json, author):
     }
 
     data = {
+        'title' : title,
         'author': author,  # Set the author ID
     }
     #'author' : mediaData['author']
@@ -25,12 +26,20 @@ def upload_image_to_wordpress(file, url, header_json, author):
     return json.loads(responce.text)
 
 class Media : 
-    def upload(mediaData) :
-        hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1") #username, application password       
-        #'C://Users//cuu02//OneDrive//바탕 화면//deform//img//PIKA.png'    
+    def __init__(self):
+        self.hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
+        self.url = 'https://dawn-test.xyz'
 
-        # file_path = "C://Users//cuu02//Downloads//"+mediaData['imgUrl']+".jpeg"           
-        return upload_image_to_wordpress(mediaData["file"], 'https://dawn-test.xyz/',hed,mediaData["author"])
+    def delete_media(mediaId) :
+        hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
+        url = 'https://dawn-test.xyz'
+        responce = requests.delete(url + "/wp-json/wp/v2/media/"+mediaId, headers = hed)
+        return responce
+
+    def upload(mediaData) :
+        hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
+        url = 'https://dawn-test.xyz'
+        return upload_image_to_wordpress(mediaData["file"], 'https://dawn-test.xyz/',hed,mediaData["author"],mediaData["title"])
     
     def getByAuthor(author):
         api_url = 'https://dawn-test.xyz/wp-json/wp/v2/media?author='+author

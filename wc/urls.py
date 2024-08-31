@@ -25,6 +25,7 @@ urlpatterns = [
     path('get-post/',views.get_post, name='get_post'),
     # media
     path('add-media/',views.add_media, name='add_media'),
+    path('delete-media/',views.delete_media, name='delete_media'),
     path('get-media-by-author/',views.get_media_by_author, name='get_media_by_author'),
     #order
     path('make-order/',views.make_order, name='make_order'),

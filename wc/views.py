@@ -42,6 +42,17 @@ def get_post(request) :
             return Response(status=status.HTTP_201_CREATED)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+@api_view(['get'])
+def delete_media(request) :
+    try :
+        if(request.GET.get('mediaId')) :
+            print(request.GET.get('mediaId'))
+            responseText = Media.delete_media(request.GET.get('mediaId'))
+            return Response(responseText, status=status.HTTP_200_OK)
+    except :
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['POST'])
 def add_media(request) :
@@ -99,21 +110,29 @@ def create_product(request) :
 
 @api_view(['POST'])
 def add_block(request) :
-    block = blockboard(
-        userid = request.data["userid"],
-        mediaid = request.data["mediaid"]
-    )
-    block.save()
-    item = blockboard.objects.filter(userid = request.data["userid"])
-    serializer = blockboardSerializer(item, many=True)
-    return Response(serializer.data)
+    try :
+        block = blockboard(
+            userid = request.data["userid"],
+            mediaid = request.data["mediaid"]
+        )
+        block.save()
+        item = blockboard.objects.filter(userid = request.data["userid"])
+        serializer = blockboardSerializer(item, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except :
+        return Response(status = status.HTTP_409_CONFLICT)
+
 
 
 @api_view(['GET'])
 def get_block(request) :
-    item = blockboard.objects.filter(userid = request.GET.get("userid"))
-    serializer = blockboardSerializer(item, many=True)
-    return Response(serializer.data)
+    try :
+        item = blockboard.objects.filter(userid = request.GET.get("userId"))
+        serializer = blockboardSerializer(item, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except item.DoesNotExist:
+        return Response(status = status.HTTP_404_NOT_FOUND)
+ 
 
     # design = Design.objects.get(userid=request.GET.get("userId"))
     # print(design.query)
