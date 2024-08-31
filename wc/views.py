@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Design
-from .serializers import DesignSerializer
+from .models import blockboard
+from .serializers import blockboardSerializer
 from .service.post import Post
 from .service.media import Media
 from .service.order import Order
@@ -97,11 +97,28 @@ def create_product(request) :
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@api_view(['GET'])
-def design_list(request) :
-    design = Design.objects.get(userid=request.GET.get("userId"))
-    serializer = DesignSerializer(design)
+@api_view(['POST'])
+def add_block(request) :
+    block = blockboard(
+        userid = request.data["userid"],
+        mediaid = request.data["mediaid"]
+    )
+    block.save()
+    item = blockboard.objects.filter(userid = request.data["userid"])
+    serializer = blockboardSerializer(item, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_block(request) :
+    item = blockboard.objects.get(userid = request.GET.get("userid"))
+    serializer = blockboardSerializer(item)
+    return Response(serializer.data)
+
+    # design = Design.objects.get(userid=request.GET.get("userId"))
+    # print(design.query)
+    # serializer = DesignSerializer(design)
+    # return Response(serializer.data)
     # elif request.method == 'POST' :
     #     serializer = BookSerializer(data=request.data)
     #     if serializer.is_valid() :

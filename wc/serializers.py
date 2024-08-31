@@ -1,10 +1,12 @@
 from rest_framework import serializers
-from wc.models import Design
+from .models import blockboard
 
-class DesignSerializer(serializers.ModelSerializer) :
-    userId = serializers.IntegerField()
-    list = serializers.CharField()
+class blockboardSerializer(serializers.ModelSerializer) :
+    userid = serializers.IntegerField()
+    mediaid = serializers.IntegerField()
+    shared = serializers.BooleanField()
+    # createdat = serializers.DateTimeField()
 
     class Meta:
-        model = Design
-        fields = ['list', 'userId']
+        model = blockboard
+        fields = ['userid', 'mediaid', 'shared']

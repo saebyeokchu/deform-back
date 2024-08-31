@@ -35,5 +35,6 @@ urlpatterns = [
     # product
     path('create-product/',views.create_product, name='create_product'),
     # database
-    path('get-design-list/',views.design_list, name='design_list')
+    path('get-block/',views.get_block, name='get_block'),
+    path('add-block/',views.add_block, name='add_block')
 ]

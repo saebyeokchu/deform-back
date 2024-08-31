@@ -1,10 +1,10 @@
 from django.db import models
 
 # Create your models here.
-class Design(models.Model) :
+class blockboard(models.Model) :
     userid = models.IntegerField()
     mediaid = models.IntegerField()
-    shared = models.BooleanField()
-    createdat = models.DateTimeField()
+    shared = models.BooleanField(default=False)
+
 
     
