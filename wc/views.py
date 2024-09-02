@@ -36,6 +36,7 @@ def update_post(request) :
 def create_post(request) :
     if request.method == 'POST' :
         try :
+            print(request.data)
             responseText = Post.create(request.data)
             return Response(responseText,status=status.HTTP_201_CREATED)
         except :
@@ -134,8 +135,10 @@ def add_block(request) :
 def update_block(request) :
     try :
         print(request.data.get("userId"))
+        print(request.data)
 
         item = blockboard.objects.get(userid = request.data.get("userId"), mediaid = request.data.get("mediaId"))
+        print(item)
         item.shared = True if request.data.get("shared") else False
         item.save()
 

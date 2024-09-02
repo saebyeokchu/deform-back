@@ -25,6 +25,8 @@ class Post :
             'featured_media' : newPost['featured_media'] 
         }
 
+        print(data)
+
         response = requests.post('https://dawn-test.xyz/wp-json/wp/v2/posts', headers=header, json=data)
         # os.remove( newPost['deleteImgUrl'] )
         
