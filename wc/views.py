@@ -125,7 +125,6 @@ def add_block(request) :
             shared = True if request.data.get("shared") else False
         )
         block.save()
-        item = blockboard.objects.filter(userid = request.data["userId"])
         serializer = blockboardSerializer(block)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except :
