@@ -151,8 +151,9 @@ def update_block(request) :
 @api_view(['get'])
 def delete_block(request) :
     try :
-        if(request.GET.get('mediaId') and request.GET.get("userId")) :
-            item = blockboard.objects.get(userid = request.data.get("userId"), mediaid = request.data.get("mediaId"))
+
+        if request.GET.get('mediaId') and request.GET.get("userId") :
+            item = blockboard.objects.get(userid = request.GET.get("userId"), mediaid = request.GET.get("mediaId"))
             if item :
                 item.delete()
             return Response(status=status.HTTP_200_OK)
