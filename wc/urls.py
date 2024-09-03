@@ -39,6 +39,8 @@ urlpatterns = [
     # database
     path('get-block/',views.get_block, name='get_block'),
     path('add-block/',views.add_block, name='add_block'),
-    path('update-block/',views.update_block, name='update_block')
+    path('update-block/',views.update_block, name='update_block'),
+    path('delete-block/',views.delete_block, name='delete_block')
+
 
 ]
