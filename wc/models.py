@@ -6,5 +6,10 @@ class blockboard(models.Model) :
     mediaid = models.IntegerField()
     shared = models.BooleanField(default=False)
 
+class auth(models.Model) :
+    userid = models.IntegerField()
+    token = models.TextField()
+    verified = models.BooleanField(default=False)
+
 
     

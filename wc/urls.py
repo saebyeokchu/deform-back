@@ -15,32 +15,39 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from . import views
+from .views import BlockView, PaymentView, ProductView, PostView, MediaView, OrderView, UserView
 
 urlpatterns = [
+     # block
+    path('get-block/', BlockView.get, name='get_block'),
+    path('add-block/', BlockView.add, name='add_block'),
+    path('update-block/', BlockView.update, name='update_block'),
+    path('delete-block/', BlockView.delete, name='delete_block'),
+
     # product
-    path('add-product/',views.add_product, name='add_product'),
+    path('add-product/', ProductView.add, name='add_product'),
+    path('create-product/',ProductView.create, name='create_product'),
+
     # post
-    path('create-post/',views.create_post, name='create_post'),
-    path('update-post/',views.update_post, name='update_post'),
-    path('get-post/',views.get_post, name='get_post'),
+    path('create-post/',PostView.create, name='create_post'),
+    path('update-post/',PostView.update, name='update_post'),
+    path('get-post/',PostView.get, name='get_post'),
+
     # media
-    path('add-media/',views.add_media, name='add_media'),
-    path('delete-media/',views.delete_media, name='delete_media'),
-    path('get-media-by-author/',views.get_media_by_author, name='get_media_by_author'),
+    path('add-media/',MediaView.add, name='add_media'),
+    path('delete-media/',MediaView.delete, name='delete_media'),
+    path('get-media-by-author/',MediaView.get_media_by_author, name='get_media_by_author'),
+
     #order
-    path('make-order/',views.make_order, name='make_order'),
+    path('make-order/',OrderView.make_order, name='make_order'),
+
     #user
-    path('get-user/',views.get_user, name='get_user'),
+    path('get-user/',UserView.get, name='get_user'),
+    path('add-auth/',UserView.add_auth, name='add_auth'),
+    path('get-auth/',UserView.get_auth, name='get_auth'),
+    path('update-auth/',UserView.update_auth, name='update_auth'),
+    path('delete-auth/',UserView.delete_auth, name='delete_auth'),
+
     # payment
-    path('get-all-payments/',views.get_all_payments, name='get_all_payments'),
-    # product
-    path('create-product/',views.create_product, name='create_product'),
-    # database
-    path('get-block/',views.get_block, name='get_block'),
-    path('add-block/',views.add_block, name='add_block'),
-    path('update-block/',views.update_block, name='update_block'),
-    path('delete-block/',views.delete_block, name='delete_block')
-
-
+    path('get-all-payments/',PaymentView.get_all_payments, name='get_all_payments'),
 ]

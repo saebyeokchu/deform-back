@@ -38,7 +38,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://example.us:40001',
     'https://0.0.0.0:40001',
     'http://dawn-test.xyz',
-    'https://dawn-test.xyz'
+    'https://dawn-test.xyz',
+    'http://hlvbnzzs.hostingkr.com',
+    'https://hlvbnzzs.hostingkr.com'
 ]
 CORS_ALLOW_HEADERS = [ "accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin", "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
 CORS_EXPOSE_HEADERS = ['Set-Cookie']
@@ -46,7 +48,7 @@ CORS_EXPOSE_HEADERS = ['Set-Cookie']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','dawn-test.xyz']
+ALLOWED_HOSTS = ['localhost','dawn-test.xyz','hlvbnzzs.hostingkr.com']
 
 
 # Application definition

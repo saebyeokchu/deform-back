@@ -1,4 +1,8 @@
 import base64, requests, json
+from ..enums import Constant
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 def header(user, password):
     credentials = user + ':' + password
@@ -7,45 +11,36 @@ def header(user, password):
     return header_json
 
 def upload_image_to_wordpress(file, url, header_json, author, title):
-    print("[media]")
-    #  'file': open(file_path,"rb"),
-    #    'file' : mediaData['imgUrl'],
-
     media = {
         'file': file,
-        'caption':  'custom-work' #고유 구분 값을 해야할까?
+        'caption':  'custom-work' 
     }
 
     data = {
         'title' : title,
-        'author': author,  # Set the author ID
+        'author': author,  
     }
-    #'author' : mediaData['author']
-    responce = requests.post(url + "wp-json/wp/v2/media", headers = header_json, files = media, data = data)
-    print("responce",responce)
+
+    responce = requests.post(url + "/wp-json/wp/v2/media", headers = header_json, files = media, data = data)
     return json.loads(responce.text)
 
-class Media : 
+class MediaService : 
     def __init__(self):
-        self.hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
-        self.url = 'https://dawn-test.xyz'
+        self.hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        self.url = Constant.wordpress_url
 
     def delete_media(mediaId) :
-        hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
-        url = 'https://dawn-test.xyz'
+        hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        url = Constant.wordpress_url
         responce = requests.delete(url + "/wp-json/wp/v2/media/"+mediaId, headers = hed)
         return responce
 
     def upload(mediaData) :
-        hed = header("user","MUBS 2xOA PboP dwK4 hpHQ DlK1")
-        url = 'https://dawn-test.xyz'
-        return upload_image_to_wordpress(mediaData["file"], 'https://dawn-test.xyz/',hed,mediaData["author"],mediaData["title"])
+        hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        return upload_image_to_wordpress(mediaData["file"], Constant.wordpress_url ,hed,mediaData["author"],mediaData["title"])
     
     def getByAuthor(author):
-        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/media?author='+author
-        print(api_url)
+        api_url = Constant.wordpress_url + '/wp-json/wp/v2/media?author=' + author
         response = requests.get(api_url)
-        response_json = response.json()
-        print(response_json)
-        return response_json
+        return response.json()
 

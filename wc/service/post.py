@@ -1,20 +1,12 @@
 import json
-import os
 import requests
 import base64
-import logging
-import datetime
 
-class Post : 
+from .api import wordpressPostAPI, wordpressPutAPI
+from ..enums import Constant
+
+class PostService : 
     def create(newPost) :
-        #crendtials
-        username = 'user'
-        password = 'MUBS 2xOA PboP dwK4 hpHQ DlK1'
-        credentials = username + ':' + password
-        cred_token = base64.b64encode(credentials.encode())
-
-        #code
-        header = {'Authorization': 'Basic ' + cred_token.decode('utf-8')}
         data = {
             'title' : newPost['title'] ,
             'author' : newPost['author'],
@@ -25,56 +17,23 @@ class Post :
             'featured_media' : newPost['featured_media'] 
         }
 
-        print(data)
-
-        response = requests.post('https://dawn-test.xyz/wp-json/wp/v2/posts', headers=header, json=data)
+        response = wordpressPostAPI('/wp-json/wp/v2/posts', data)
         # os.remove( newPost['deleteImgUrl'] )
-        
         return json.loads(response.text)
 
     def read(postId):
-        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/posts/' + postId
-        print(api_url)
+        api_url = Constant.wordpress_url + '/wp-json/wp/v2/posts/' + postId
         response = requests.get(api_url)
-        response_json = response.json()
-        return response_json
+        return response.json()
 
     def update(data):
-        post_id = data["postId"]
-        show_post = data["showPost"]
-
-        print(post_id)
-        print(show_post)
-
-        #crendtials
-        username = 'user'
-        password = 'MUBS 2xOA PboP dwK4 hpHQ DlK1'
-        credentials = username + ':' + password
-        cred_token = base64.b64encode(credentials.encode())
-
-        #code
-        header = {'Authorization': 'Basic ' + cred_token.decode('utf-8')}
-
-        # Endpoint for the specific post
-        api_url = 'https://dawn-test.xyz/wp-json/wp/v2/posts'
-        url = f"{api_url}/{post_id}"
-        
-        # Data payload to update the category
-
-        category_id = 1 if show_post else 30
+        category_id = 1 if data["showPost"] else 2
         data = {
             'categories': [category_id]  # 1 for show, 2 for hide
         }
 
-        print(category_id, data)
-        
         # Making the PUT request to update the post
-        response = requests.put(
-            url,
-            json=data,
-            headers=header
-        )
-        
+        response = wordpressPutAPI( '/wp-json/wp/v2/posts/' +  data["postId"] , data )
         return response.json()
 
 

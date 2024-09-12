@@ -10,3 +10,13 @@ class blockboardSerializer(serializers.ModelSerializer) :
     class Meta:
         model = blockboard
         fields = ['userid', 'mediaid', 'shared']
+
+
+class authSerializer(serializers.ModelSerializer) :
+    userid = serializers.IntegerField()
+    token = serializers.CharField()
+    verified = serializers.BooleanField()
+
+    class Meta:
+        model = blockboard
+        fields = ['userid', 'token', 'verified']

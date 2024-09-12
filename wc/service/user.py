@@ -1,19 +1,57 @@
-import requests
 from woocommerce import API
 
-class User :
+from .api import sendWoocommerceAPI
+
+from ..models import auth
+from ..serializers import authSerializer
+from ..enums import Constant
+
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+class UserService :
     def get(userId) :
-        consumer_key = "ck_a4c80ba803896185c152917c831cae9d8ff12c6a"
-        consumer_secret = "cs_75c9402c341a5dab93b8483b4dd2ac9a65891da0"
-
-        wcapi = API(
-            url="https://dawn-test.xyz",
-            consumer_key=consumer_key,
-            consumer_secret=consumer_secret,
-            wp_api=True,
-            version="wc/v3"
-        )
-
-        print(wcapi.get("customers/"+userId).json())
-
+        wcapi = sendWoocommerceAPI()
         return wcapi.get("customers/"+userId).json()
+
+    def get_auth(userId) :
+        try : 
+            item = auth.objects.filter(userid = userId, verified = False)
+            serializer = authSerializer(item, many=True)
+            return serializer.data
+        except :
+            return RuntimeError
+    
+    def update_auth(token) :
+        try :
+            item = auth.objects.get(
+                token = token
+            )
+            item.verified = True
+            item.save()
+            serializer = authSerializer(item)
+            return serializer.data
+        except :
+            return RuntimeError
+    
+    def add_auth(auth_input : auth) :
+        try :
+            auth_input.save()
+            serializer = authSerializer(auth_input)
+            return serializer.data
+        except :
+            return RuntimeError
+    
+    def delete_auth(userId) :
+        try :
+            item = auth.objects.get(
+                userid = userId, 
+                verified = True
+            )
+            if item :
+                item.delete()
+            return True
+        except :
+            return RuntimeError
+        
