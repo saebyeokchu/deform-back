@@ -14,8 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+#BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -100,23 +100,13 @@ WSGI_APPLICATION = 'deformback.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'deform', 
-        'USER': 'postgres',
-        'PASSWORD': 'deformeditoradmin',
-        'HOST': '127.0.0.1', 
-        'PORT': '5432',
-    }
-}
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': BASE_DIR / 'db.sqlite3',
+     }
+ }
+
 
 FILE_CHARSET = 'utf-8'
 DEFAULT_CHARSET = 'utf-8'

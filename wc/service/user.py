@@ -13,6 +13,7 @@ import os
 class UserService :
     def get(userId) :
         wcapi = sendWoocommerceAPI()
+        print(wcapi)
         return wcapi.get("customers/"+userId).json()
 
     def get_auth(userId) :
