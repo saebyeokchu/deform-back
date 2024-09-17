@@ -10,7 +10,7 @@ import base64
 
 def sendWoocommerceAPI() :
     wcapi = API(
-            url=Constant.wordpress_url,
+            url=Constant.woocommerce_url,
             consumer_key=os.environ.get('WOOCOMMERCE_CONSUMER_KEY'),
             consumer_secret=os.environ.get('WOOCOMMERCE_CONSUMER_SECRET'),
             wp_api=True,
