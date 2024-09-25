@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-import json
 import requests
 import base64
 
@@ -16,28 +15,21 @@ def sendWoocommerceAPI() :
             wp_api=True,
             version="wc/v3"
         )
-    
     return wcapi
 
+def header(user, password):
+    credentials = user + ':' + password
+    token = base64.b64encode(credentials.encode())
+    header_json = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    return header_json
+
 def wordpressPostAPI(sendUrl, sendData) :
-    #crendtials
-    credentials = os.environ.get('WORDPRESS_USER_KEY') + ':' + os.environ.get('WORDPRESS_USER_NAME')
-    cred_token = base64.b64encode(credentials.encode())
-
-    #code
-    header = {'Authorization': 'Basic ' + cred_token.decode('utf-8')}
-
-    return requests.post(Constant.wordpress_url + sendUrl, headers=header, json=sendData)
-    # os.remove( newPost['deleteImgUrl'] )
-
+    hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
+    return requests.post(Constant.wordpress_url + sendUrl, headers=hed, json=sendData)
 
 def wordpressPutAPI(sendUrl, sendData) :
-    #crendtials
-    credentials = os.environ.get('WORDPRESS_USER_KEY') + ':' + os.environ.get('WORDPRESS_USER_NAME')
-    cred_token = base64.b64encode(credentials.encode())
+    print("3",sendUrl, sendData)
+    hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
+    print(hed)
+    return requests.put(Constant.wordpress_url + sendUrl, headers=hed, json=sendData)
 
-    #code
-    header = {'Authorization': 'Basic ' + cred_token.decode('utf-8')}
-
-    return requests.put(Constant.wordpress_url + sendUrl, headers=header, json=sendData)
-    # os.remove( newPost['deleteImgUrl'] )

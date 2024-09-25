@@ -18,8 +18,8 @@ class BlockView :
     @api_view(['GET'])
     def get(request) :
         try :
-            userId = request.data.get("userId")
-            mediaId = request.data.get("mediaId")
+            userId = request.GET.get("userId")
+            mediaId = request.GET.get("mediaId")
             if userId :
                 return_data = BlockService.get(userId, mediaId)
                 return Response(return_data, status=status.HTTP_200_OK)
@@ -48,7 +48,7 @@ class BlockView :
             mediaId = request.data.get("mediaId")
             shared = request.data.get("shared")
 
-            if userId and mediaId and shared :
+            if userId and mediaId :
                 return_data = BlockService.update(userId, mediaId, shared)
                 return Response(return_data, status=status.HTTP_202_ACCEPTED)
             else :
@@ -57,11 +57,11 @@ class BlockView :
             return Response(status = status.HTTP_406_NOT_ACCEPTABLE)
         
 
-    @api_view(['get'])
+    @api_view(['GET'])
     def delete(request) :
         try :
-            userId = request.data.get("userId")
-            mediaId = request.data.get("mediaId")
+            userId = request.GET.get("userId")
+            mediaId = request.GET.get("mediaId")
 
             if mediaId and userId :
                 BlockService.delete(userId, mediaId)
@@ -96,6 +96,7 @@ class PostView :
     def update(request) :
         if request.method == 'POST' :
             try :
+                print(request.data)
                 responseText = PostService.update(request.data)
                 return Response(responseText,status=status.HTTP_202_ACCEPTED)
             except :
@@ -105,7 +106,6 @@ class PostView :
     def create(request) :
         if request.method == 'POST' :
             try :
-                print(request.data)
                 responseText = PostService.create(request.data)
                 return Response(responseText,status=status.HTTP_201_CREATED)
             except :
@@ -138,6 +138,7 @@ class MediaView :
         try :
             if(request.data.get('file')) :
                 responseText = MediaService.upload(request.data)
+                print(responseText)
                 return Response(responseText, status=status.HTTP_201_CREATED)
             else :
                 return Response(status=status.HTTP_404_NOT_FOUND)

@@ -41,6 +41,7 @@ class MediaService :
     
     def getByAuthor(author):
         api_url = Constant.wordpress_url + '/wp-json/wp/v2/media?author=' + author
+        print(api_url)
         response = requests.get(api_url)
         return response.json()
 
