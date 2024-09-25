@@ -16,7 +16,9 @@ def sendWoocommerceAPI() :
             wp_api=True,
             version="wc/v3"
         )
-    
+
+    print(Constant.woocommerce_url)
+    print(os.environ.get('WOOCOMMERCE_CONSUMER_KEY'))
     return wcapi
 
 def wordpressPostAPI(sendUrl, sendData) :
