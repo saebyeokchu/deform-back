@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name : checkout source code
+        uses : actions/checkout@v4
+      - name: Check Node v
+        run: node -v
       - name: zip create 
         run: zip -qq -r ./editor-back.zip ./appspec.yml ./deploy.sh
         shell: bash
