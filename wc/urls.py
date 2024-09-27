@@ -23,6 +23,7 @@ urlpatterns = [
     path('add-block/', BlockView.add, name='add_block'),
     path('update-block/', BlockView.update, name='update_block'),
     path('delete-block/', BlockView.delete, name='delete_block'),
+    path('delete-block-by-user-id/', BlockView.deleteByUserId, name='delete_block_by_user_id'),
 
     # product
     path('add-product/', ProductView.add, name='add_product'),

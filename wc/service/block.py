@@ -47,4 +47,11 @@ class BlockService :
             return True
         except :
             return RuntimeError
+    
+    def deleteByUserId(userId) :
+        try :
+            blockboard.objects.get(userid=userId).delete()
+            return True
+        except :
+            return RuntimeError
         

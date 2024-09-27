@@ -70,7 +70,19 @@ class BlockView :
                 return Response(status=status.HTTP_404_NOT_FOUND)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+        
+    @api_view(['GET'])
+    def deleteByUserId(request) :
+        try :
+            userId = request.GET.get("userId")
+            if userId :
+                BlockService.deleteByUserId(userId)
+                return Response(status=status.HTTP_200_OK)
+            else :
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        except :
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 class ProductView :
     @api_view(['POST'])
     def create(request) :
