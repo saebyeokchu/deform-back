@@ -7,7 +7,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'deform',
             'USER': 'postgres',
-            'PASSWORD': 'deformeditoradmin',
+            'PASSWORD': '1234',
             'HOST': 'host.docker.internal',
             'PORT': '5432',
             }

@@ -18,7 +18,8 @@ from django.urls import path
 from .views import BlockView, PaymentView, ProductView, PostView, MediaView, OrderView, UserView
 
 urlpatterns = [
-     # block
+    # block
+    path('get-all/', BlockView.getAll, name='get_all'),
     path('get-block/', BlockView.get, name='get_block'),
     path('add-block/', BlockView.add, name='add_block'),
     path('update-block/', BlockView.update, name='update_block'),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('create-post/',PostView.create, name='create_post'),
     path('update-post/',PostView.update, name='update_post'),
     path('get-post/',PostView.get, name='get_post'),
+    path('delete-post/',PostView.delete, name='delete_post'),
 
     # media
     path('add-media/',MediaView.add, name='add_media'),

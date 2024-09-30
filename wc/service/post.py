@@ -2,12 +2,12 @@ import json
 import requests
 import base64
 
-from .api import wordpressPostAPI, wordpressPutAPI
+from .api import wordpressDeleteAPI, wordpressPostAPI, wordpressPutAPI
 from ..enums import Constant
 
 def header(user, password):
     credentials = user + ':' + password
-    token = base64.b64encode(credentials.encode())
+    token = base64.b64encode(credentials.encode(''))
     header_json = {'Authorization': 'Basic ' + token.decode('utf-8')}
     return header_json
 
@@ -43,5 +43,11 @@ class PostService :
         print(response)
 
         return response.json()
+    
+    def delete(postId):
+        print(postId)
 
+        response = wordpressDeleteAPI( '/wp-json/wp/v2/posts/'+postId)
+        return response.json()
+    
 

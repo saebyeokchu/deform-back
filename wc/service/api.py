@@ -30,6 +30,11 @@ def wordpressPostAPI(sendUrl, sendData) :
 def wordpressPutAPI(sendUrl, sendData) :
     print("3",sendUrl, sendData)
     hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
-    print(hed)
     return requests.put(Constant.wordpress_url + sendUrl, headers=hed, json=sendData)
+
+def wordpressDeleteAPI(sendUrl) :
+    print(sendUrl)
+    hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+    responce = requests.delete(Constant.wordpress_url + sendUrl, headers = hed)
+    return responce
 

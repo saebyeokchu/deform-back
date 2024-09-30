@@ -15,6 +15,19 @@ from .service.block import BlockService
 
 # Create your views here.
 class BlockView : 
+
+    @api_view(['GET'])
+    def getAll(request) :
+        try :
+            userId = request.GET.get("userId")
+            if userId :
+                return_data = BlockService.getAll(userId)
+                return Response(return_data, status=status.HTTP_200_OK)
+            else :
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        except :
+            return Response(status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     @api_view(['GET'])
     def get(request) :
         try :
@@ -47,9 +60,10 @@ class BlockView :
             userId = request.data.get("userId")
             mediaId = request.data.get("mediaId")
             shared = request.data.get("shared")
+            postId = request.data.get("postId")
 
             if userId and mediaId :
-                return_data = BlockService.update(userId, mediaId, shared)
+                return_data = BlockService.update(userId, mediaId, shared, postId)
                 return Response(return_data, status=status.HTTP_202_ACCEPTED)
             else :
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -132,6 +146,16 @@ class PostView :
                 return Response(responseText, status=status.HTTP_201_CREATED)
             except :
                 return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
+    @api_view(['GET'])
+    def delete(request) :
+        if request.method == 'GET' :
+            #post = request.POST.get('post')
+            try :
+                responseText = PostService.delete(request.GET.get("postId"))
+                return Response(responseText, status=status.HTTP_200_OK)
+            except :
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class MediaView : 
     @api_view(['GET'])
@@ -148,6 +172,7 @@ class MediaView :
     @api_view(['POST'])
     def add(request) :
         try :
+            print(request.data.get('file'))
             if(request.data.get('file')) :
                 responseText = MediaService.upload(request.data)
                 print(responseText)
