@@ -208,6 +208,7 @@ class UserView :
     @api_view(['GET'])
     def get(request) :
         try :
+            print(request)
             responseText = UserService.get(request.GET.get('userId'))
             return Response(responseText, status=status.HTTP_201_CREATED)
         except :
