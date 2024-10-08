@@ -206,7 +206,7 @@ class OrderView :
 class UserView :
     # User Views
     @api_view(['GET'])
-    def get(request) :
+    def get_user(request) :
         try :
             print(request)
             responseText = UserService.get(request.GET.get('userId'))

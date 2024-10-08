@@ -45,7 +45,7 @@ urlpatterns = [
     path('make-order/',OrderView.make_order, name='make_order'),
 
     #user
-    path('get-user/',UserView.get, name='get_user'),
+    path('get-user/',UserView.get_user, name='get_user'),
     path('add-auth/',UserView.add_auth, name='add_auth'),
     path('get-auth/',UserView.get_auth, name='get_auth'),
     path('update-auth/',UserView.update_auth, name='update_auth'),
