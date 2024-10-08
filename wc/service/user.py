@@ -54,4 +54,16 @@ class UserService :
             return True
         except :
             return RuntimeError
+    
+    def delete_auth_all(userId) :
+        try :
+            item = auth.objects.get(
+                userid = userId, 
+                verified = True
+            )
+            if item :
+                item.delete()
+            return True
+        except :
+            return RuntimeError
         

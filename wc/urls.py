@@ -50,6 +50,7 @@ urlpatterns = [
     path('get-auth/',UserView.get_auth, name='get_auth'),
     path('update-auth/',UserView.update_auth, name='update_auth'),
     path('delete-auth/',UserView.delete_auth, name='delete_auth'),
+    path('delete-auth-all/',UserView.delete_auth_all, name='delete_auth')
 
     # payment
     path('get-all-payments/',PaymentView.get_all_payments, name='get_all_payments'),
