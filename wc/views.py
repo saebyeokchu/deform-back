@@ -214,12 +214,14 @@ class UserView :
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-    @api_view(['GET'])
+    @api_view(['POST'])
     def get_auth(request) :
         try :
-            userId = request.GET.get("userId")
-            if userId :
-                return_data = UserService.get_auth(userId)
+            userId = request.data["userId"]
+            token = request.data["token"]
+
+            if userId and token :
+                return_data = UserService.get_auth(userId, token)
                 return Response(return_data, status=status.HTTP_200_OK)
             else :
                  return Response(status = status.HTTP_404_NOT_FOUND) 
@@ -229,10 +231,11 @@ class UserView :
     @api_view(['POST'])
     def update_auth(request) :
         try :
-            token = request.data.get("token")
+            userId = request.data["userId"]
+            token = request.data["token"]
 
-            if token :
-                return_data = UserService.update_auth(token)
+            if userId and token :
+                return_data = UserService.update_auth(userId,token)
                 return Response(return_data, status=status.HTTP_202_ACCEPTED)
             else :
                 return Response(status = status.HTTP_409_CONFLICT)

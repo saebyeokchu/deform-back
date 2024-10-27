@@ -5,7 +5,7 @@ cd /home/ec2-user/prod-back
 chmod +x ./deploy.sh
 python3 manage.py makemigrations wc
 python3 manage.py migrate
-docker build -t saebyeok/backend:latest .
+docker build -t cuu2253/deform-gongbae-editor-back:latest .
 docker compose up -d
 systemctl restart nginx
 

@@ -110,9 +110,9 @@ WSGI_APPLICATION = 'deformback.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'deform', 
+        'NAME': 'editor', 
         'USER': 'postgres',
-        'PASSWORD': 'deformeditoradmin', #deformeditoradmin
+        'PASSWORD': 'dgepw', #deformeditoradmin
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }

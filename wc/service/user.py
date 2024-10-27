@@ -13,21 +13,22 @@ import os
 class UserService :
     def get(userId) :
         wcapi = sendWoocommerceAPI()
+        print(wcapi)
         return wcapi.get("customers/"+userId).json()
 
-    def get_auth(userId) :
+    def get_auth(userId, token) :
         try : 
-            item = auth.objects.filter(userid = userId, verified = False)
+            item = auth.objects.filter(userid = userId, token=token, verified = False)
             serializer = authSerializer(item, many=True)
             return serializer.data
         except :
             return RuntimeError
     
-    def update_auth(token) :
+    def update_auth(userId, token) :
         try :
-            item = auth.objects.get(
-                token = token
-            )
+            print("userId",userId)
+            item = auth.objects.get( userid = userId, token=token )
+            print("item",item)
             item.verified = True
             item.save()
             serializer = authSerializer(item)

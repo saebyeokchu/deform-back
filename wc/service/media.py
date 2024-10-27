@@ -26,11 +26,11 @@ def upload_image_to_wordpress(file, url, header_json, author, title):
 
 class MediaService : 
     def __init__(self):
-        self.hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        self.hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
         self.url = Constant.wordpress_url
 
     def delete_media(mediaId) :
-        hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
         url = Constant.wordpress_url
         responce = requests.delete(url + "/wp-json/wp/v2/media/"+mediaId, headers = hed)
         print(responce)
@@ -38,7 +38,7 @@ class MediaService :
 
     def upload(mediaData) :
         print(mediaData)
-        hed = header("user",os.environ.get('WORDPRESS_USER_KEY'))
+        hed = header(os.environ.get('WORDPRESS_USER_NAME'),os.environ.get('WORDPRESS_USER_KEY'))
         print(mediaData)
         return upload_image_to_wordpress(mediaData["file"], Constant.wordpress_url ,hed,mediaData["author"],mediaData["title"])
     
