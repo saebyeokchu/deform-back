@@ -6,6 +6,7 @@ chmod +x ./deploy.sh
 python3 manage.py makemigrations wc
 python3 manage.py migrate
 docker build -t cuu2253/deform-gongbae-editor-back:latest .
+docker push cuu2253/deform-gongbae-editor-back:latest
 docker compose up -d
 systemctl restart nginx
 

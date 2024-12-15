@@ -26,13 +26,13 @@ class UserService :
     
     def update_auth(userId, token) :
         try :
-            print("userId",userId)
-            item = auth.objects.get( userid = userId, token=token )
-            print("item",item)
-            item.verified = True
-            item.save()
-            serializer = authSerializer(item)
-            return serializer.data
+            print("userId",userId,token)
+            item = auth.objects.filter(userid=userId,token=token).first()
+            if item :
+                item.verified = True
+                item.save()
+                serializer = authSerializer(item)
+                return serializer.data
         except :
             return RuntimeError
     
@@ -58,13 +58,7 @@ class UserService :
     
     def delete_auth_all(userId) :
         try :
-            item = auth.objects.get(
-                userid = userId, 
-                verified = True
-            )
-            if item :
-                item.delete()
+            auth.objects.filter(userid=userId).delete()
             return True
         except :
             return RuntimeError
-        

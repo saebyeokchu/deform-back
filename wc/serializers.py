@@ -6,11 +6,12 @@ class blockboardSerializer(serializers.ModelSerializer) :
     mediaid = serializers.IntegerField()
     postid = serializers.IntegerField()
     shared = serializers.BooleanField()
+    productid = serializers.IntegerField()
     # createdat = serializers.DateTimeField()
 
     class Meta:
         model = blockboard
-        fields = ['userid', 'mediaid', 'postid', 'shared']
+        fields = ['userid', 'mediaid', 'postid', 'shared', 'productid']
 
 
 class authSerializer(serializers.ModelSerializer) :

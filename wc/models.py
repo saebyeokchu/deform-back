@@ -6,6 +6,7 @@ class blockboard(models.Model) :
     mediaid = models.IntegerField()
     postid = models.IntegerField(null=True)
     shared = models.BooleanField(default=False)
+    productid = models.IntegerField(null=True)
 
 class auth(models.Model) :
     userid = models.IntegerField()

@@ -13,7 +13,7 @@ def header(user, password):
 def upload_image_to_wordpress(file, url, header_json, author, title):
     media = {
         'file': file,
-        'caption':  'custom-work' 
+        'caption':  Constant.user_post_share
     }
 
     data = {

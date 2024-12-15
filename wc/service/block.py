@@ -32,18 +32,25 @@ class BlockService :
         except :
             return RuntimeError
         
-    def update(userId, mediaId, shared, postId) :
+    def update(userId, mediaId, shared, postId, productId) :
         try :
-            print(userId, mediaId, shared, postId)
+            print("userId,",userId,mediaId)
             item = blockboard.objects.get(
                 userid = userId, 
                 mediaid = mediaId
             )
-            item.shared = True if shared else False
-            item.postid = postId
-            item.save()
-            serializer = blockboardSerializer(item)
-            return serializer.data
+            if item :
+                print("item",item)
+                item.shared = item.shared if shared is None else shared
+                print("shared",shared)
+                item.postid = item.postId if postId is None else postId
+                print("postId",postId)
+                item.productid = item.productid if productId is None else productid
+                print("productid",productId)
+
+                item.save()
+                serializer = blockboardSerializer(item)
+                return serializer.data
         except :
             return RuntimeError
         

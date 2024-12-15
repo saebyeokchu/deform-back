@@ -17,10 +17,11 @@ class PostService :
             'title' : newPost['title'],
             'author' : newPost['author'],
             'status': 'publish',
-            'slug' : 'custom-work-hide',
-            # 'content': newPost['content'] ,newPost['author']
-            'content': "<img src=\""+newPost['image_url']+"\" />",
-            'featured_media' : newPost['featured_media'] 
+            # 'slug' : Constant.user_post_hide,
+            # 'content': newPost['content'] ,newPost['author'] <img src=\""+newPost['image_url']+"\" />
+            'content': "<div />",
+            'featured_media' : newPost['featured_media'],
+            "categories": [Constant.user_post_share_id]
         }
 
         response = wordpressPostAPI('/wp-json/wp/v2/posts', data)
@@ -34,11 +35,9 @@ class PostService :
         return response.json()
 
     def update(data):
-        category_id = Constant.user_share_category if data["showPost"] == 1 else Constant.user_order_category  # 1 for 사용자공유작품, 2 for 사용자주문작품
+        category_id = Constant.user_post_share_id if data["showPost"] == 1 else Constant.user_post_hide_id  # 1 for 사용자공유작품, 2 for 사용자주문작품
 
         # Making the PUT request to update the post
-        print("1",data)
-        print("2",{ 'categories': [category_id] })
         response = wordpressPutAPI( '/wp-json/wp/v2/posts/' +  str(data["postId"]) , { 'categories': [category_id] })
         print(response)
 

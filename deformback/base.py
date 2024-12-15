@@ -28,27 +28,16 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
-    'https://localhost:3000',
-    'https://localhost',
     'http://127.0.0.1:3000',
-    'https://example-us.vercel.app',
-    'https://example.us', 
-    'https://www.example.us', 
-    'https://www.example.us:40001',
-    'https://example.us:40001',
-    'https://0.0.0.0:40001',
-    'http://dawn-test.xyz',
-    'https://dawn-test.xyz',
-    'http://hlvbnzzs.hostingkr.com',
-    'https://hlvbnzzs.hostingkr.com'
+    'https://editor.littleblock.co.kr',
 ]
 CORS_ALLOW_HEADERS = [ "accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin", "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
 CORS_EXPOSE_HEADERS = ['Set-Cookie']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','dawn-test.xyz','hlvbnzzs.hostingkr.com']
+ALLOWED_HOSTS = ['localhost','editor.littleblock.co.kr']
 
 
 # Application definition

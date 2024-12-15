@@ -20,6 +20,7 @@ class BlockView :
     def getAll(request) :
         try :
             userId = request.GET.get("userId")
+            print(userId)
             if userId :
                 return_data = BlockService.getAll(userId)
                 return Response(return_data, status=status.HTTP_200_OK)
@@ -61,9 +62,10 @@ class BlockView :
             mediaId = request.data.get("mediaId")
             shared = request.data.get("shared")
             postId = request.data.get("postId")
+            productId = request.data.get("productId")
 
             if userId and mediaId :
-                return_data = BlockService.update(userId, mediaId, shared, postId)
+                return_data = BlockService.update(userId, mediaId, shared, postId, productId)
                 return Response(return_data, status=status.HTTP_202_ACCEPTED)
             else :
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -268,14 +270,16 @@ class UserView :
                 return Response(status=status.HTTP_404_NOT_FOUND)
         except :
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
+    @api_view(['get'])   
     def delete_auth_all(request) :
         try :
             userId = request.GET.get("userId")
 
             if userId :
-                UserService.delete_auth_all(userId)
-                return Response(status=status.HTTP_200_OK)
+                print("userId : ",userId)
+                if UserService.delete_auth_all(userId) :
+                    return Response(status=status.HTTP_200_OK)
             else :
                 return Response(status=status.HTTP_404_NOT_FOUND)
         except :
