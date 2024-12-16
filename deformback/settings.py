@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from decouple import config
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -100,8 +102,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'editor', 
-        'USER': 'postgres',
-        'PASSWORD': 'dgepw', #deformeditoradmin
+        'USER': config('SETTING_DB_NAME'),
+        'PASSWORD': config('SETTING_DB_NAME'), #deformeditoradmin
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }
